@@ -15,5 +15,4 @@ COPY . .
 EXPOSE 3000
 
 # Uygulamayı çalıştırın.
-CMD ["node", "app.js"]
-
+CMD ["node", "api.js"]
