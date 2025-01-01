@@ -32,7 +32,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Push Docker image
-      run: docker push my-app:${{ github.sha }}
+      run: docker push halilkaradayi1936/event-driven:${{ github.sha }}
 
   deploy:
     needs: build
@@ -45,5 +45,4 @@ jobs:
     - name: Create Kubernetes namespace
       run: kubectl create namespace my-namespace --dry-run=client -o yaml | kubectl apply -f -
     - name: Deploy to Kubernetes
-      run: helm upgrade --install my-app chart-name/ --namespace my-namespace --set image.tag=${{ github.sha }}
-
+      run: helm upgrade --install halilkaradayi1936/event-driven chart-name/ --namespace my-namespace --set image.tag=${{ github.sha }}
