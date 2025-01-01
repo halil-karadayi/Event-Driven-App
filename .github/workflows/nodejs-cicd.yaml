@@ -24,19 +24,28 @@ jobs:
       # 3) Producer image build & push
       - name: Build & Push Producer
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/producer:latest ./producer
+          docker build \
+            -f ./producer/Dockerfile \
+            -t ${{ secrets.DOCKER_USERNAME }}/producer:latest \
+            ./producer
           docker push ${{ secrets.DOCKER_USERNAME }}/producer:latest
 
       # 4) Consumer image build & push
       - name: Build & Push Consumer
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/consumer:latest ./consumer
+          docker build \
+            -f ./consumer/Dockerfile \
+            -t ${{ secrets.DOCKER_USERNAME }}/consumer:latest \
+            ./consumer
           docker push ${{ secrets.DOCKER_USERNAME }}/consumer:latest
 
       # 5) API image build & push
       - name: Build & Push API
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/api:latest ./api
+          docker build \
+            -f ./api/Dockerfile \
+            -t ${{ secrets.DOCKER_USERNAME }}/api:latest \
+            ./api
           docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
 
       # 6) Helm CLI yükle (alternatif: azure/setup-helm vs. kullanılabilir)
