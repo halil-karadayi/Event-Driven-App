@@ -12,7 +12,7 @@ consumer:
   kafkaClientId: "consumer-app"
   kafkaGroupId: "consumer-group"
   kafkaTopic: "events"
-  mongoUri: "mongodb://mongodb-service:27017"
+  mongoUri: "mongodb://10.42.187.153:27017"
   mongoDbName: "eventsdb"
   mongoCollection: "events"
 
@@ -21,7 +21,7 @@ consumer:
 restApi:
   image: "docker.io/halilkaradayi1936/api:latest"
   port: 3000
-  mongoUri: "mongodb://mongodb-service:27017"
+  mongoUri: "mongodb://10.42.187.153:27017"
   mongoDbName: "eventsdb"
   mongoCollection: "events"
   kafkaBrokers: "kafka-service:9092"
