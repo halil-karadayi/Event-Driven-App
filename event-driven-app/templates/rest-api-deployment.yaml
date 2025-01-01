@@ -28,3 +28,5 @@ spec:
               value: {{ .Values.restApi.mongoDbName }}
             - name: MONGO_COLLECTION
               value: {{ .Values.restApi.mongoCollection }}
+              ports:
+                - containerPort: 8080

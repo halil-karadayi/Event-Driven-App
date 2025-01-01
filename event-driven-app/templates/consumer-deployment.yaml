@@ -28,3 +28,5 @@ spec:
               value: {{ .Values.consumer.mongoDbName }}
             - name: MONGO_COLLECTION
               value: {{ .Values.consumer.mongoCollection }}
+              ports:
+                - containerPort: 8080

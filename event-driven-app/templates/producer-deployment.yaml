@@ -22,3 +22,5 @@ spec:
           value: {{ .Values.producer.kafkaClientId }}
         - name: KAFKA_TOPIC
           value: {{ .Values.producer.kafkaTopic }}
+          ports:
+            - containerPort: 8080
