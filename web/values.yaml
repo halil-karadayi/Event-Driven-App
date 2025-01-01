@@ -5,9 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: dockerhub.io/halilkaradayi1936/event-driven:27eb77be7baebe5571a5e666704b0572a428611f
+  repository: docker.io/halilkaradayi1936/event-driven
   pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
 imagePullSecrets:
