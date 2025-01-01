@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+      - name: consumer
+        image: {{ .Values.consumer.image }}
+        env:
+        - name: KAFKA_BROKERS
+          value: {{ .Values.consumer.kafkaBrokers }}
+        - name: KAFKA_CLIENT_ID
+          value: {{ .Values.consumer.kafkaClientId }}
+        - name: KAFKA_TOPIC
+          value: {{ .Values.consumer.kafkaTopic }}

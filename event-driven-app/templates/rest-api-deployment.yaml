@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-api-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: rest-api
+  template:
+    metadata:
+      labels:
+        app: rest-api
+    spec:
+      containers:
+      - name: rest-api
+        image: {{ .Values.rest-api.image }}
+        env:
+        - name: KAFKA_BROKERS
+          value: {{ .Values.rest-api.kafkaBrokers }}
+        - name: KAFKA_CLIENT_ID
+          value: {{ .Values.rest-api.kafkaClientId }}
+        - name: KAFKA_TOPIC
+          value: {{ .Values.rest-api.kafkaTopic }}
