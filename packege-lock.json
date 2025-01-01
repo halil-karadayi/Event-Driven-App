@@ -1,0 +1,44 @@
+{
+    "name": "kafka-producer",
+    "version": "1.0.0",
+    "lockfileVersion": 2,
+    "requires": true,
+    "packages": {
+      "": {
+        "name": "kafka-producer",
+        "version": "1.0.0",
+        "license": "ISC",
+        "dependencies": {
+          "kafkajs": "^2.2.3",
+          "uuid": "^8.3.2"
+        }
+      },
+      "node_modules/kafkajs": {
+        "version": "2.2.3",
+        "resolved": "https://registry.npmjs.org/kafkajs/-/kafkajs-2.2.3.tgz",
+        "integrity": "sha512-Kc48rGMgKwATzpZYAlQsUWCKIf0zLaYpTCZTprkKcn12HxKcbAHZlNCwuvy2SW7pXoyTkxIV8J+umyuXz53P5w==",
+        "engines": {
+          "node": ">=8"
+        }
+      },
+      "node_modules/uuid": {
+        "version": "8.3.2",
+        "resolved": "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz",
+        "integrity": "sha512-5DY7t2HL96fBf4S3Rv5k5q2tBP/pf4BV58FvIh4zvdToxqTmVdZC9Dbn0rG5IyN24hRkxk1JYM6d/hOtKTEzjg=="
+      }
+    },
+    "dependencies": {
+      "kafkajs": {
+        "version": "2.2.3",
+        "resolved": "https://registry.npmjs.org/kafkajs/-/kafkajs-2.2.3.tgz",
+        "integrity": "sha512-Kc48rGMgKwATzpZYAlQsUWCKIf0zLaYpTCZTprkKcn12HxKcbAHZlNCwuvy2SW7pXoyTkxIV8J+umyuXz53P5w==",
+        "requires": {}
+      },
+      "uuid": {
+        "version": "8.3.2",
+        "resolved": "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz",
+        "integrity": "sha512-5DY7t2HL96fBf4S3Rv5k5q2tBP/pf4BV58FvIh4zvdToxqTmVdZC9Dbn0rG5IyN24hRkxk1JYM6d/hOtKTEzjg=="
+      }
+    }
+  }
+  

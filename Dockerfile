@@ -1,18 +1,18 @@
-# Temel olarak resmi Node.js image'ını kullanın.
-FROM node:14
+# Dockerfile
 
-# Çalışma dizinini belirleyin.
-WORKDIR /usr/src/app
+FROM node:16-alpine
 
-# Uygulama bağımlılıklarınızı kopyalayın ve kurun.
+# Çalışma dizini
+WORKDIR /app
+
+# package.json ve package-lock.json'ı kopyala
 COPY package*.json ./
-RUN npm install
 
-# Uygulama kaynak kodunu kopyalayın.
+# Production bağımlılıklarını yükle
+RUN npm install --production
+
+# Uygulama kodunu kopyala
 COPY . .
 
-# Uygulamanın çalıştırılacağı portu belirtin.
-EXPOSE 3000
-
-# Uygulamayı çalıştırın.
-CMD ["node", "api.js"]
+# Uygulamayı başlat
+CMD ["npm", "start"]

@@ -1,24 +1,16 @@
 {
-  "name": "event-driven-app",
+  "name": "kafka-producer",
   "version": "1.0.0",
-  "description": "A simple event-driven application using Node.js, Kafka, and MongoDB",
-  "main": "producer.js",
+  "description": "A Node.js producer app that sends random events to a Kafka topic every 3 seconds",
+  "main": "index.js",
   "scripts": {
-    "start": "node producer.js",
-    "test": "echo \"No tests to run.\""
+    "start": "node index.js"
   },
-  "keywords": [
-    "nodejs",
-    "kafka",
-    "mongodb",
-    "event-driven"
-  ],
-  "author": "Your Name",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "kafkajs": "^1.15.0",
-    "mongodb": "^3.6.6",
+    "kafkajs": "^2.2.3",
     "uuid": "^8.3.2"
   }
 }
