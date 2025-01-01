@@ -57,15 +57,15 @@ jobs:
         echo "${KUBECONFIG_ENCODED}" | base64 --decode > $HOME/.kube/config
         kubectl cluster-info
 
-    - name: Change directory to event-driven
-      run: cd event-driven
+    - name: Change directory to event-driven-app
+      run: cd event-driven-app
 
-    - name: List files in the event-driven directory
+    - name: List files in the event-driven-app directory
       run: ls -la
 
     - name: Deploy to Kubernetes
       run: |
-        helm upgrade --install event-driven . \
+        helm upgrade --install event-driven-app ./event-driven-app \
           --namespace event-driven \
           --set image.repository=docker.io/halilkaradayi1936/event-driven \
           --set image.tag=${{ github.sha }}
