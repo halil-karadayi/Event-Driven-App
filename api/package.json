@@ -1,13 +1,15 @@
 {
-  "name": "rest-api",
+  "name": "consumer",
   "version": "1.0.0",
-  "description": "A simple REST API for querying events from MongoDB",
+  "description": "A Kafka consumer application with MongoDB integration",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
+    "kafkajs": "^2.2.4",
+    "mongodb": "^5.4.0",
     "express": "^4.18.2",
-    "mongodb": "^5.4.0"
+    "prom-client": "^14.1.1"
   }
 }
