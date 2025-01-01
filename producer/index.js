@@ -1,11 +1,22 @@
-
 const { Kafka } = require('kafkajs');
 const { v4: uuidv4 } = require('uuid');
+const express = require('express');
+const client = require('prom-client');
 
 // Ortam değişkenlerinden Kafka bilgilerini al
 const kafkaBrokers = process.env.KAFKA_BROKERS || 'localhost:9092';
 const kafkaClientId = process.env.KAFKA_CLIENT_ID || 'producer-app';
 const topicName = process.env.KAFKA_TOPIC || 'events'; // publish edilecek topic
+const metricsPort = process.env.METRICS_PORT || 4000; // Prometheus için port
+
+// Prometheus metrikleri
+const register = client.register;
+const collectDefaultMetrics = client.collectDefaultMetrics;
+collectDefaultMetrics(); // Varsayılan metrikleri topla
+const eventsPublishedCounter = new client.Counter({
+  name: 'events_published_total',
+  help: 'Total number of events published to Kafka',
+});
 
 // Kafka ve Producer nesnesini oluştur
 const kafka = new Kafka({
@@ -42,6 +53,9 @@ async function publishEvent() {
       message: 'Event published',
       event,
     }));
+
+    // Prometheus metriği artır
+    eventsPublishedCounter.inc();
   } catch (error) {
     console.error(JSON.stringify({
       level: 'error',
@@ -50,6 +64,21 @@ async function publishEvent() {
     }));
   }
 }
+
+// Express uygulaması (Prometheus için)
+const app = express();
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', register.contentType);
+  res.end(await register.metrics());
+});
+
+// Express sunucusunu başlat
+app.listen(metricsPort, () => {
+  console.log(JSON.stringify({
+    level: 'info',
+    message: `Metrics server listening on port ${metricsPort}`,
+  }));
+});
 
 // Uygulama başlangıcı
 (async () => {
