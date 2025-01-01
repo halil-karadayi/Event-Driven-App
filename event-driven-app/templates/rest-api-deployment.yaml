@@ -13,12 +13,12 @@ spec:
         app: rest-api
     spec:
       containers:
-      - name: rest-api
-        image: {{ .Values.rest-api.image }}
-        env:
-        - name: KAFKA_BROKERS
-          value: {{ .Values.rest-api.kafkaBrokers }}
-        - name: KAFKA_CLIENT_ID
-          value: {{ .Values.rest-api.kafkaClientId }}
-        - name: KAFKA_TOPIC
-          value: {{ .Values.rest-api.kafkaTopic }}
+        - name: rest-api
+          image: {{ .Values.restApi.image }}
+          env:
+            - name: KAFKA_BROKERS
+              value: {{ .Values.restApi.kafkaBrokers }}
+            - name: KAFKA_CLIENT_ID
+              value: {{ .Values.restApi.kafkaClientId }}
+            - name: KAFKA_TOPIC
+              value: {{ .Values.restApi.kafkaTopic }}
