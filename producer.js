@@ -1,4 +1,4 @@
-// producer.js
+
 const { Kafka } = require('kafkajs');
 const uuid = require('uuid');
 

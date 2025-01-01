@@ -1,4 +1,4 @@
-// consumer.js
+
 const { Kafka } = require('kafkajs');
 const { MongoClient } = require('mongodb');
 
