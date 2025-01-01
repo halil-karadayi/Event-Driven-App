@@ -53,7 +53,7 @@ jobs:
      
     - name: Deploy to Kubernetes
       run: |
-        helm upgrade --install event-driven . \
+        helm upgrade --install event-driven ./event-driven \
           --namespace event-driven \
           --set image.repository=docker.io/halilkaradayi1936/event-driven \
           --set image.tag=${{ github.sha }}
