@@ -2,17 +2,17 @@ replicaCount: 1
 
 producer:
   image: "docker.io/halilkaradayi1936/producer:latest"
-  kafkaBrokers: "kafka-service.my-event-ns.svc.cluster.local:9092"
+  kafkaBrokers: "kafka-service:9092"
   kafkaClientId: "producer-app"
   kafkaTopic: "events"
 
 consumer:
   image: "docker.io/halilkaradayi1936/consumer:latest"
-  kafkaBrokers: "kafka-service.my-event-ns.svc.cluster.local:9092"
+  kafkaBrokers: "kafka-service:9092"
   kafkaClientId: "consumer-app"
   kafkaGroupId: "consumer-group"
   kafkaTopic: "events"
-  mongoUri: "mongodb-service.my-event-ns.svc.cluster.local:27017"
+  mongoUri: "mongodb://mongodb-service:27017"
   mongoDbName: "eventsdb"
   mongoCollection: "events"
 
@@ -21,9 +21,9 @@ consumer:
 restApi:
   image: "docker.io/halilkaradayi1936/api:latest"
   port: 3000
-  mongoUri: "mongodb-service.my-event-ns.svc.cluster.local:27017"
+  mongoUri: "mongodb://mongodb-service:27017"
   mongoDbName: "eventsdb"
   mongoCollection: "events"
-  kafkaBrokers: "kafka-service.my-event-ns.svc.cluster.local:9092"
+  kafkaBrokers: "kafka-service:9092"
   kafkaClientId: "rest-api-client"
   kafkaTopic: "events"
