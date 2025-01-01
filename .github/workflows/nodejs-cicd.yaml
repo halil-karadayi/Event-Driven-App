@@ -43,10 +43,14 @@ jobs:
     - name: Set up Helm
       uses: azure/setup-helm@v1
     - name: Set up kubeconfig
+      shell: bash
       env:
         KUBECONFIG_ENCODED: ${{ secrets.KUBECONFIG }}
       run: |
-        echo "${KUBECONFIG_ENCODED}" | base64 --decode > $HOME/.kube/config      
+        mkdir -p $HOME/.kube
+        echo "${KUBECONFIG_ENCODED}" | base64 --decode > $HOME/.kube/config
+        kubectl cluster-info
+     
     - name: Deploy to Kubernetes
       run: |
         helm upgrade --install event-driven ./chart-name \
