@@ -6,8 +6,6 @@
   "scripts": {
     "start": "node producer.js",
     "test": "echo \"No tests to run.\""
-  }
-
   },
   "keywords": [
     "nodejs",
@@ -24,4 +22,3 @@
     "uuid": "^8.3.2"
   }
 }
-
