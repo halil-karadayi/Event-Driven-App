@@ -56,4 +56,4 @@ jobs:
         helm upgrade --install event-driven . \
           --namespace event-driven \
           --set image.repository=docker.io/halilkaradayi1936/event-driven \
-          --set image.tag=d29efa1da0429e49af6a56a01adb85d6dafc8feb
+          --set image.tag=${{ github.sha }}
