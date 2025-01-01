@@ -13,12 +13,18 @@ spec:
         app: consumer
     spec:
       containers:
-      - name: consumer
-        image: {{ .Values.consumer.image }}
-        env:
-        - name: KAFKA_BROKERS
-          value: {{ .Values.consumer.kafkaBrokers }}
-        - name: KAFKA_CLIENT_ID
-          value: {{ .Values.consumer.kafkaClientId }}
-        - name: KAFKA_TOPIC
-          value: {{ .Values.consumer.kafkaTopic }}
+        - name: consumer
+          image: {{ .Values.consumer.image }}
+          env:
+            - name: KAFKA_BROKERS
+              value: {{ .Values.consumer.kafkaBrokers }}
+            - name: KAFKA_CLIENT_ID
+              value: {{ .Values.consumer.kafkaClientId }}
+            - name: KAFKA_TOPIC
+              value: {{ .Values.consumer.kafkaTopic }}
+            - name: MONGO_URI
+              value: {{ .Values.consumer.mongoUri }}
+            - name: MONGO_DB_NAME
+              value: {{ .Values.consumer.mongoDbName }}
+            - name: MONGO_COLLECTION
+              value: {{ .Values.consumer.mongoCollection }}

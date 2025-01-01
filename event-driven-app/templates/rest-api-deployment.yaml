@@ -22,3 +22,9 @@ spec:
               value: {{ .Values.restApi.kafkaClientId }}
             - name: KAFKA_TOPIC
               value: {{ .Values.restApi.kafkaTopic }}
+            - name: MONGO_URI
+              value: {{ .Values.restApi.mongoUri }}
+            - name: MONGO_DB_NAME
+              value: {{ .Values.restApi.mongoDbName }}
+            - name: MONGO_COLLECTION
+              value: {{ .Values.restApi.mongoCollection }}
