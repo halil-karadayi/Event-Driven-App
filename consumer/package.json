@@ -1,14 +1,13 @@
 {
-    "name": "producer",
-    "version": "1.0.0",
-    "description": "A simple Kafka producer application",
-    "main": "index.js",
-    "scripts": {
-      "start": "node index.js"
-    },
-    "dependencies": {
-      "kafkajs": "^2.2.4",
-      "uuid": "^8.3.2"
-    }
+  "name": "consumer",
+  "version": "1.0.0",
+  "description": "A Kafka consumer application with MongoDB integration",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "kafkajs": "^2.2.4",
+    "mongodb": "^5.4.0"
   }
-  
+}
