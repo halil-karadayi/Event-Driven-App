@@ -1,18 +1,15 @@
-# Dockerfile
-
 FROM node:16-alpine
 
-# Çalışma dizini
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# package.json ve package-lock.json'ı kopyala
+# package.json ve package-lock.json’u kopyala
 COPY package*.json ./
 
-# Production bağımlılıklarını yükle
-RUN npm install --production
+# Bağımlılıkları yükle
+RUN npm install
 
-# Uygulama kodunu kopyala
+# Diğer tüm dosyaları kopyala
 COPY . .
 
-# Uygulamayı başlat
-CMD ["npm", "start"]
+# Projede 'index.js' dosyası varsa
+CMD ["node", "index.js"]
