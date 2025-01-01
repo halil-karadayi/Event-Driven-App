@@ -68,6 +68,7 @@ jobs:
         run: |
           # Tag'ler values.yaml'da "image: <DOCKER_HUB_USER>/producer:latest" şeklinde set edilebilir.
           helm upgrade --install event-driven-app ./event-driven-app \
+            -n my-event-ns \
             --set producer.image="${{ secrets.DOCKER_USERNAME }}/producer:latest" \
             --set consumer.image="${{ secrets.DOCKER_USERNAME }}/consumer:latest" \
             --set restApi.image="${{ secrets.DOCKER_USERNAME }}/api:latest"
