@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  producer:
+    volumes:
+      - ./producer:/app
+    command: npm run dev
+  consumer:
+    volumes:
+      - ./consumer:/app
+    command: npm run dev
+  api:
+    volumes:
+      - ./api:/app
+    command: npm run dev

@@ -1,0 +1,166 @@
+locals {
+  hcloud_token = "${var.hcloud_token}"
+}
+
+module "kube-hetzner" {
+  providers = {
+    hcloud = hcloud
+  }
+
+  version = "2.11.3"
+  automatically_upgrade_k3s = false
+  automatically_upgrade_os = false
+  cluster_name = "extenship-dc1"
+  load_balancer_type     = "lb11"
+  load_balancer_location = "fsn1"
+  hcloud_token = var.hcloud_token != "" ? var.hcloud_token : local.hcloud_token
+  source = "kube-hetzner/kube-hetzner/hcloud"
+  ssh_public_key = file("./ssh/hetzner-k8s-extenship.pub")
+  ssh_private_key = file("./ssh/hetzner-k8s-extenship")
+  network_region = "eu-central"
+  ingress_controller = "nginx"
+  use_cluster_name_in_node_name = false
+  cni_plugin = "calico"
+  enable_csi_driver_smb = true
+  export_values = true
+  placement_group_disable = true
+
+  nginx_values = <<EOT
+controller:
+  metrics:
+    enabled: false
+  podAnnotations:
+    prometheus.io/port: "10254"
+    prometheus.io/scrape: "true"
+  watchIngressWithoutClass: "true"
+  kind: "Deployment"
+  replicaCount: 3
+  config:
+    "use-forwarded-headers": "true"
+    "compute-full-forwarded-for": "true"
+    "use-proxy-protocol": "true"
+  service:
+    annotations:
+      "load-balancer.hetzner.cloud/name": "extenship-dc1-nginx"
+      "load-balancer.hetzner.cloud/use-private-ip": "true"
+      "load-balancer.hetzner.cloud/disable-private-ingress": "true"
+      "load-balancer.hetzner.cloud/disable-public-network": "false"
+      "load-balancer.hetzner.cloud/ipv6-disabled": "false"
+      "load-balancer.hetzner.cloud/location": "fsn1"
+      "load-balancer.hetzner.cloud/type": "lb11"
+      "load-balancer.hetzner.cloud/uses-proxyprotocol": "true"
+      "load-balancer.hetzner.cloud/algorithm-type": "round_robin"
+      "load-balancer.hetzner.cloud/health-check-interval": "15s"
+      "load-balancer.hetzner.cloud/health-check-timeout": "10s"
+      "load-balancer.hetzner.cloud/health-check-retries": "3"
+  EOT
+
+  postinstall_exec = ["restorecon -v /usr/local/bin/k3s"]
+
+  #preinstall_exec = [
+  #  "semanage permissive -a kernel_generic_helper_t",
+  #  "semanage permissive -l"
+  #]
+
+  enable_longhorn = true
+
+  longhorn_values = <<EOT
+nodeSelector:
+  node.kubernetes.io/role: storage
+defaultSettings:
+  createDefaultDiskLabeledNodes: true
+  defaultDataPath: /var/longhorn
+  node-down-pod-deletion-policy: delete-both-statefulset-and-deployment-pod
+  taintToleration: node.kubernetes.io/role=storage:NoSchedule
+persistence:
+  defaultFsType: ext4
+  defaultClassReplicaCount: 3
+  defaultClass: true
+  EOT
+
+  control_plane_nodepools = [
+    {
+      name        = "master",
+      server_type = "cpx31",
+      location    = "fsn1",
+      labels      = [],
+      taints      = [],
+      count       = 3
+    },
+  ]
+
+  agent_nodepools = [
+    {
+      name        = "ingress",
+      server_type = "cpx31",
+      location    = "fsn1",
+      labels = [
+        "node.kubernetes.io/role=ingress"
+      ],
+      taints = [
+        "node.kubernetes.io/role=ingress:NoSchedule"
+      ],
+      floating_ip = true,
+      count = 1
+    },
+    {
+      name        = "storage",
+      server_type = "cpx31",
+      location    = "fsn1",
+      labels = [
+        "node.kubernetes.io/role=storage",
+        "node.longhorn.io/create-default-disk=true"
+      ],
+      taints = [
+        "node.kubernetes.io/role=storage:NoSchedule"
+      ],
+      count       = 1,
+      longhorn_volume_size = 0,
+      backups = true
+    },
+    {
+      name        = "app",
+      server_type = "cpx31",
+      location    = "fsn1",
+      labels      = [],
+      taints      = [],
+      count       = 3
+      #longhorn_volume_size = 100,
+    },
+  ]
+
+  extra_firewall_rules = [
+    {
+      description     = "Outbound All"
+      direction       = "out"
+      protocol        = "tcp"
+      port            = "any"
+      source_ips      = []
+      destination_ips = ["0.0.0.0/0", "::/0"]
+    },
+  ]
+}
+
+provider "hcloud" {
+  token = var.hcloud_token != "" ? var.hcloud_token : local.hcloud_token
+}
+
+terraform {
+  required_version = ">= 1.5.0"
+  required_providers {
+    hcloud = {
+      source  = "hetznercloud/hcloud"
+      version = ">= 1.43.0"
+    }
+  }
+}
+
+output "kubeconfig" {
+  value     = module.kube-hetzner.kubeconfig
+  sensitive = true
+}
+
+variable "hcloud_token" {
+  sensitive = true
+  default   = ""
+}
