@@ -13,6 +13,7 @@ Bu proje, Kafka, MongoDB ve Node.js kullanılarak oluşturulmuş bir Event-Drive
 
 ## event-driven-app helm configleri ve servisler bulunmaktadır.
 ## github actions ci-cd dosyaları .github > workflows > nodejs-cicd.yaml dosyasında yer almaktadır.
+## services klasöründe kafka, mongo ve zookeper bulunmaktadır.
 
 
 ## Gereksinimler
